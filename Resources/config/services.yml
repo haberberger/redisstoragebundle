@@ -1,0 +1,7 @@
+parameters:
+#    haberberger_redis_storage.example.class: Haberberger\Bundle\RedisStorageBundle\Example
+
+services:
+#    haberberger_redis_storage.example:
+#        class: %haberberger_redis_storage.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
