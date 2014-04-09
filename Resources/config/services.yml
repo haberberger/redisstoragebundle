@@ -1,7 +1,9 @@
 parameters:
-#    haberberger_redis_storage.example.class: Haberberger\Bundle\RedisStorageBundle\Example
+    haberberger_redis_storage.redisstorage.class: Haberberger\Bundle\RedisStorageBundle\Services\RedisStorage
 
 services:
-#    haberberger_redis_storage.example:
-#        class: %haberberger_redis_storage.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    haberberger_redis_storage.redisstorage:
+        class: %haberberger_redis_storage.redisstorage.class%
+        arguments: [%redis.url%]
+    redis:
+      alias: haberberger_redis_storage.redisstorage
