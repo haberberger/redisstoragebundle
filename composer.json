@@ -1,0 +1,31 @@
+{
+    "name":        "ahaberberger/redisstoragebundle",
+    "type":        "symfony-bundle",
+    "description": "Several high level storage strategies on Redis as a Symfony2 Bundle",
+    "keywords":    ["ahaberberger", "symfony", "bundle", "redis"],
+    "homepage":    "http://gitlab.haberberger.net/ahaberberger/redisstoragebundle",
+    "license":     "MIT",
+
+    "authors": [
+        {
+            "name": "Andreas Haberberger",
+            "homepage": "http://github.com/ahaberberger"
+        }
+    ],
+
+    "require": {
+        "php":                      ">=5.4.*",
+        "symfony/framework-bundle": ">=2.4.*",
+        "predis/predis":            "dev-master"
+    },
+
+    "minimum-stability": "dev",
+
+    "autoload": {
+        "psr-0": {
+            "Haberberger\\RedisStorageBundle": ""
+        }
+    },
+
+    "target-dir": "Haberberger/RedisStorageBundle"
+}
