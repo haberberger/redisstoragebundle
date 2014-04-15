@@ -64,6 +64,16 @@ class RedisStorage
         return $this->_redis->get($key);
     }
 
+    public function stringGetByPattern($pattern)
+    {
+        $keys = $this->_redis->keys($pattern);
+        $values = [];
+        foreach ($keys as $key) {
+            $values[] = $this->stringRead($key);
+        }
+        return $values;
+    }
+
     public static function parseRedisUrl($url)
     {
         $user = self::USER_DEFAULT;
