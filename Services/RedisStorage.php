@@ -10,7 +10,6 @@ namespace Haberberger\Bundle\RedisStorageBundle\Services;
 use Haberberger\Bundle\RedisStorageBundle\Exceptions\RedisBundleException;
 use Haberberger\Bundle\URSBundle\Model\AbstractUrsModel;
 use Predis\Client;
-use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Class RedisStorage
@@ -27,6 +26,8 @@ class RedisStorage
     const KEY_META_CLASSNAME = 'classname';
     const KEY_META = 'meta';
     const KEY_CONTENT = 'content';
+    const VARIANT_ID = 'id';
+    const VARIANT_FULL = 'full';
 
     /** @var \Predis\Client  */
     protected $_redis;
@@ -69,6 +70,10 @@ class RedisStorage
         return $this->_redis->get($key);
     }
 
+    public function stringExists($key) {
+        return ($this->_redis->get($key) !== null);
+    }
+
     public function stringGetByPattern($pattern)
     {
         $keys = $this->_redis->keys($pattern);
@@ -79,9 +84,14 @@ class RedisStorage
         return $values;
     }
 
-    public function getModel($id)
+    /**
+     * @param string $classname
+     * @param $id
+     * @return mixed
+     */
+    public function getModel($classname, $id)
     {
-        $key = sprintf('ATTRIBUTE_%s', $id);
+        $key = sprintf('%s_%s', $classname::getClassIdentifier(), $id);
         $data = json_decode($this->stringRead($key), true);
         $meta = $data[self::KEY_META];
         $content = $data[self::KEY_CONTENT];
@@ -96,24 +106,27 @@ class RedisStorage
      */
     public function writeModel(AbstractUrsModel $model)
     {
-        $key = sprintf('%s_%s', get_class($model), $model->getId());
+        $classname = get_class($model);
+        $key = sprintf('%s_%s', $classname::getClassIdentifier(), $model->getId());
+        $update = $this->stringExists($key);
         $meta = [
             self::KEY_META_CLASSNAME => get_class($model)
         ];
         $content = $model->toArray();
-        return $this->stringWrite(
+        $this->stringWrite(
             $key,
             json_encode([
                 self::KEY_META => $meta,
                 self::KEY_CONTENT => $content
             ])
         );
+        return $update;
     }
 
-    public function listModel($model)
+    public function listModel($classname, $variant = self::VARIANT_FULL)
     {
         //TODO Pattern quoten
-        $pattern = sprintf('%s_*', $model);
+        $pattern = sprintf('%s_*', $classname::getClassIdentifier());
         $entries = $this->stringGetByPattern($pattern);
         $out = [];
         foreach ($entries as $entry) {
@@ -122,7 +135,15 @@ class RedisStorage
             $content = $data[self::KEY_CONTENT];
             $classname = $meta[self::KEY_META_CLASSNAME];
             $instance = $classname::fromArray($content);
-            $out[] = $instance;
+            switch ($variant) {
+                case self::VARIANT_FULL:
+                    $out[] = $instance;
+                    break;
+                case self::VARIANT_ID:
+                    $out[] = $instance->getId();
+                    break;
+            }
+
         }
         return $out;
     }
