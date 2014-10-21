@@ -6,8 +6,8 @@
  * Time: 10:02
  */
 
-namespace Haberberger\Bundle\RedisStorageBundle\Services;
-use Haberberger\Bundle\RedisStorageBundle\Exceptions\RedisBundleException;
+namespace Haberberger\RedisStorageBundle\Services;
+use Haberberger\RedisStorageBundle\Exceptions\RedisBundleException;
 use Predis\Client;
 
 /**

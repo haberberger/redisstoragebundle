@@ -6,7 +6,7 @@
  * Time: 10:08
  */
 
-namespace Haberberger\Bundle\RedisStorageBundle\Exceptions;
+namespace Haberberger\RedisStorageBundle\Exceptions;
 
 /**
  * Class RedisBundleException

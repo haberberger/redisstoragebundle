@@ -1,6 +1,6 @@
 <?php
 
-namespace Haberberger\Bundle\RedisStorageBundle;
+namespace Haberberger\RedisStorageBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

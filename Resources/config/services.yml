@@ -1,5 +1,5 @@
 parameters:
-    haberberger_redis_storage.redisstorage.class: Haberberger\Bundle\RedisStorageBundle\Services\RedisStorage
+    haberberger_redis_storage.redisstorage.class: Haberberger\RedisStorageBundle\Services\RedisStorage
 
 services:
     haberberger_redis_storage.redisstorage:

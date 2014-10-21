@@ -1,6 +1,6 @@
 <?php
 
-namespace Haberberger\Bundle\RedisStorageBundle\DependencyInjection;
+namespace Haberberger\RedisStorageBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

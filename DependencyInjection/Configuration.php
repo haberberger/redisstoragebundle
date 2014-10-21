@@ -1,6 +1,6 @@
 <?php
 
-namespace Haberberger\Bundle\RedisStorageBundle\DependencyInjection;
+namespace Haberberger\RedisStorageBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
