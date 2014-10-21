@@ -14,8 +14,8 @@
     ],
 
     "require": {
-        "php":                      ">=5.4.*",
-        "symfony/framework-bundle": ">=2.4.*",
+        "php":                      ">=5.4",
+        "symfony/framework-bundle": ">=2.4",
         "predis/predis":            "dev-master"
     },
 
