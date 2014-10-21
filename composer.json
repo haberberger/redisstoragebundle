@@ -16,7 +16,7 @@
     "require": {
         "php":                      ">=5.4",
         "symfony/framework-bundle": ">=2.4",
-        "predis/predis":            ">=1.1"
+        "predis/predis":            "1.0.0"
     },
 
     "minimum-stability": "dev",
