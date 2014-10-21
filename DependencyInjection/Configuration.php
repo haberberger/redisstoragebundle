@@ -17,13 +17,18 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('haberberger_redis_storage');
+        $builder = new TreeBuilder();
+
+        $builder->root('haberberger_redis_storage')
+            ->children()
+                ->scalarNode('url')
+                ->defaultValue('redis://localhost:6379')
+            ->end();
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
 
-        return $treeBuilder;
+        return $builder;
     }
 }
