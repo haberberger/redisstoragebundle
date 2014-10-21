@@ -8,7 +8,6 @@
 
 namespace Haberberger\Bundle\RedisStorageBundle\Services;
 use Haberberger\Bundle\RedisStorageBundle\Exceptions\RedisBundleException;
-use Haberberger\Bundle\URSBundle\Model\AbstractUrsModel;
 use Predis\Client;
 
 /**
@@ -82,70 +81,6 @@ class RedisStorage
             $values[] = $this->stringRead($key);
         }
         return $values;
-    }
-
-    /**
-     * @param string $classname
-     * @param $id
-     * @return mixed
-     */
-    public function getModel($classname, $id)
-    {
-        $key = sprintf('%s_%s', $classname::getClassIdentifier(), $id);
-        $data = json_decode($this->stringRead($key), true);
-        $meta = $data[self::KEY_META];
-        $content = $data[self::KEY_CONTENT];
-        $classname = $meta[self::KEY_META_CLASSNAME];
-        $instance = $classname::fromArray($content);
-        return $instance;
-    }
-
-    /**
-     * @param AbstractUrsModel $model
-     * @return mixed
-     */
-    public function writeModel(AbstractUrsModel $model)
-    {
-        $classname = get_class($model);
-        $key = sprintf('%s_%s', $classname::getClassIdentifier(), $model->getId());
-        $update = $this->stringExists($key);
-        $meta = [
-            self::KEY_META_CLASSNAME => get_class($model)
-        ];
-        $content = $model->toArray();
-        $this->stringWrite(
-            $key,
-            json_encode([
-                self::KEY_META => $meta,
-                self::KEY_CONTENT => $content
-            ])
-        );
-        return $update;
-    }
-
-    public function listModel($classname, $variant = self::VARIANT_FULL)
-    {
-        //TODO Pattern quoten
-        $pattern = sprintf('%s_*', $classname::getClassIdentifier());
-        $entries = $this->stringGetByPattern($pattern);
-        $out = [];
-        foreach ($entries as $entry) {
-            $data = json_decode($entry, true);
-            $meta = $data[self::KEY_META];
-            $content = $data[self::KEY_CONTENT];
-            $classname = $meta[self::KEY_META_CLASSNAME];
-            $instance = $classname::fromArray($content);
-            switch ($variant) {
-                case self::VARIANT_FULL:
-                    $out[] = $instance;
-                    break;
-                case self::VARIANT_ID:
-                    $out[] = $instance->getId();
-                    break;
-            }
-
-        }
-        return $out;
     }
 
     public static function parseRedisUrl($url)

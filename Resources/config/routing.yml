@@ -1,3 +1,0 @@
-haberberger_redis_storage_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: HaberbergerRedisStorageBundle:Default:index }
