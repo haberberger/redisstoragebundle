@@ -59,20 +59,44 @@ class RedisStorage
         }
     }
 
-    public function stringWrite($key, $value)
+    /**
+     * Write a string value to storage
+     * @param string $key       the key
+     * @param string $value     the string value to be written
+     * @param null|int $timeout an optional timout in milliseconds
+     * @return string redis result
+     */
+    public function stringWrite($key, $value, $timeout = null)
     {
-        return $this->_redis->set($key, $value);
+        $result = $this->_redis->set($key, $value);
+        if ($timeout !== null) $this->_redis->pexpire($key, $timeout);
+        return $result;
     }
 
+    /**
+     * Get a string value from storage
+     * @param string $key   the key
+     * @return string       the key's value
+     */
     public function stringRead($key)
     {
         return $this->_redis->get($key);
     }
 
+    /**
+     * Check if a key exists in storage
+     * @param string $key the key
+     * @return bool       true, if the key exists, false otherwise
+     */
     public function stringExists($key) {
         return ($this->_redis->get($key) !== null);
     }
 
+    /**
+     * Get string values from storage using a valid key pattern
+     * @param string $pattern   the pattern
+     * @return array            an array of string values
+     */
     public function stringGetByPattern($pattern)
     {
         $keys = $this->_redis->keys($pattern);
@@ -83,7 +107,13 @@ class RedisStorage
         return $values;
     }
 
-    public static function parseRedisUrl($url)
+    /**
+     * Parse the given redis url
+     * @param string $url   the url
+     * @return array        an array of config values
+     * @throws RedisBundleException
+     */
+    protected static function parseRedisUrl($url)
     {
         $user = self::USER_DEFAULT;
         $password = self::PASSWORD_DEFAULT;
