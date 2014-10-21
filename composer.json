@@ -1,15 +1,15 @@
 {
-    "name":        "Haberberger/redisstoragebundle",
+    "name":        "haberberger/redisstoragebundle",
     "type":        "symfony-bundle",
     "description": "Several high level storage strategies on Redis as a Symfony2 Bundle",
     "keywords":    ["ahaberberger", "symfony", "bundle", "redis"],
-    "homepage":    "https://github.com/Haberberger/redisstoragebundle",
+    "homepage":    "https://github.com/haberberger/redisstoragebundle",
     "license":     "MIT",
 
     "authors": [
         {
             "name": "Andreas Haberberger",
-            "homepage": "https://github.com/Haberberger"
+            "homepage": "https://github.com/haberberger"
         }
     ],
 
