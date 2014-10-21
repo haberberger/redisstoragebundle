@@ -1,6 +1,5 @@
 # Some higher level storage strategies for Redis as a Symfony2 Bundle
 
-require:
 
 Step 1: Setting up the bundle
 =============================
