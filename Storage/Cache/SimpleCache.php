@@ -19,13 +19,23 @@ class SimpleCache extends AbstractCache
         $this->ttl = null;
     }
 
-
-    public function set($key, $value)
+    /**
+     * Put a value into the cache using a key
+     * @param $key the key
+     * @param $value the value
+     * @return string redis result
+     */
+    public function put($key, $value)
     {
         $redisKey = $this->translateKey($key);
-        $this->redis->stringWrite($redisKey, $value, $this->ttl);
+        return $this->redis->stringWrite($redisKey, $value, $this->ttl);
     }
 
+    /**
+     * Get a value from the cache sing key
+     * @param string $key the key
+     * @return bool|string the value or false if the value doesn't exist
+     */
     public function get($key)
     {
         $redisKey = $this->translateKey($key);
