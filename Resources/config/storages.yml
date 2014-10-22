@@ -1,0 +1,2 @@
+parameters:
+  haberberger_redis_storage.simplecache: Haberberger\RedisStorageBundle\Storage\Cache\SimpleCache

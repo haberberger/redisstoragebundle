@@ -10,5 +10,5 @@ services:
       alias: haberberger_redis_storage.redisstorage
 
     haberberger_redis_storage.cachefactory:
-            class: %haberberger_redis_storage.cachefactory.class%
-            arguments: [@redis]
+      class: %haberberger_redis_storage.cachefactory.class%
+      arguments: [@redis]
