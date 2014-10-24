@@ -125,7 +125,7 @@ class RedisStorage
      * @return array        an array of config values
      * @throws RedisBundleException
      */
-    protected static function parseRedisUrl($url)
+    public static function parseRedisUrl($url)
     {
         // redis://user:password@host:port/1
         $user = self::USER_DEFAULT;
@@ -141,32 +141,11 @@ class RedisStorage
         $result = preg_match($regex, $url, $matches);
 
         if (array_key_exists('user', $matches)) $user = $matches['user'];
-        if (array_key_exists('password', $matches)) $user = $matches['password'];
-        if (array_key_exists('host', $matches)) $user = $matches['host'];
-        if (array_key_exists('port', $matches)) $user = $matches['port'];
-        if (array_key_exists('db', $matches)) $user = $matches['db'];
+        if (array_key_exists('passwd', $matches)) $password = $matches['passwd'];
+        if (array_key_exists('host', $matches)) $host = $matches['host'];
+        if (array_key_exists('port', $matches)) $port = $matches['port'];
+        if (array_key_exists('db', $matches)) $db = $matches['db'];
 
-        /*
-        list($protocol, $rest) = explode('://', $url);
-        if ($protocol != self::PROTOCOL_REDIS) throw new RedisBundleException(sprintf('Protocol %s is not supported!', $protocol));
-        if ($rest != '') {
-            if (strpos($rest, '@') !== false) list($userpart, $rest) = explode('@', $rest);
-            if (strpos($rest, ':') !== false) {
-                list($host, $rest) = explode(':', $rest);
-                if (strpos($rest, '/') !== false) {
-                    list($port, $db) = explode('/', $rest);
-                } else {
-                    $port = $rest;
-                }
-            } else {
-                if (strpos($rest, '/') !== false) {
-                    list($host, $db) = explode('/', $rest);
-                } else {
-                    $host = $rest;
-                }
-            }
-        }
-        */
         return [$user, $password, $host, (int) $port, (int) $db];
     }
 } 
