@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: andreas
+ * User: ahaberberger
  * Date: 22.10.14
  * Time: 10:21
  */
@@ -26,7 +26,7 @@ class CacheFactory
 
     /**
      * Get a simple cache instance with identifier
-     * @param $identifier the identifier (an arbitrary string)
+     * @param string $identifier the identifier (an arbitrary string)
      * @return AbstractCache
      */
     public function getInstance($identifier)

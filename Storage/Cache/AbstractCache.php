@@ -9,25 +9,31 @@
 namespace Haberberger\RedisStorageBundle\Storage\Cache;
 
 use Haberberger\RedisStorageBundle\Services\RedisStorage;
+use Haberberger\RedisStorageBundle\Storage\AbstractStorage;
 
-class AbstractCache
+abstract class AbstractCache extends AbstractStorage
 {
     const PATTERN_KEY = 'CACHE_%s_%s';
 
-    /** @var  RedisStorage */
-    protected $redis;
+    /**
+     * Put a value into the cache using a key
+     * @param string $key         the key
+     * @param string $value       the value
+     * @return mixed
+     */
+    abstract public function put($key, $value);
 
-    /** @var  string */
-    protected $identifier;
+    /**
+     * Get a value from the cache using key
+     * @param string $key the key
+     * @return bool|string the value or false if the value doesn't exist
+     */
+    abstract public function get($key);
 
-    function __construct($identifier, $redis)
-    {
-        $this->identifier = $identifier;
-        $this->redis = $redis;
-    }
-
-    protected function translateKey($key)
-    {
-        return sprintf(self::PATTERN_KEY, $this->identifier, $key);
-    }
+    /**
+     * Expire a cache value identified by key
+     * @param string $key the key
+     * @return mixed
+     */
+    abstract public function expire($key);
 }

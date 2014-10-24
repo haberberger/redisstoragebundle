@@ -1,13 +1,18 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: andreas
+ * User: ahaberberger
  * Date: 22.10.14
  * Time: 10:35
  */
 
 namespace Haberberger\RedisStorageBundle\Storage\Cache;
 
+/**
+ * A simple Cache that expires by timeout
+ * Class SimpleCache
+ * @package Haberberger\RedisStorageBundle\Storage\Cache
+ */
 class SimpleCache extends AbstractCache
 {
     /** @var  int */
@@ -21,18 +26,20 @@ class SimpleCache extends AbstractCache
 
     /**
      * Put a value into the cache using a key
-     * @param $key the key
-     * @param $value the value
+     * @param string $key         the key
+     * @param string $value       the value
+     * @param int    $overrideTtl optional time to live for a single record
      * @return string redis result
      */
-    public function put($key, $value)
+    public function put($key, $value, $overrideTtl = null)
     {
         $redisKey = $this->translateKey($key);
-        return $this->redis->stringWrite($redisKey, $value, $this->ttl);
+        $timeout = ($overrideTtl === null) ? $this->ttl : $overrideTtl;
+        return $this->redis->stringWrite($redisKey, $value, $timeout);
     }
 
     /**
-     * Get a value from the cache sing key
+     * Get a value from the cache using key
      * @param string $key the key
      * @return bool|string the value or false if the value doesn't exist
      */
@@ -45,6 +52,18 @@ class SimpleCache extends AbstractCache
             return false;
         }
     }
+
+    /**
+     * Expire a cache value identified by key
+     * @param string $key the key
+     * @return mixed
+     */
+    public function expire($key)
+    {
+        $redisKey = $this->translateKey($key);
+        return $this->redis->stringDelete($redisKey);
+    }
+
 
     /**
      * @return int

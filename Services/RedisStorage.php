@@ -108,6 +108,15 @@ class RedisStorage
     }
 
     /**
+     * Delete a string value from storage
+     * @param string $key the key
+     * @return int number of deleted keys
+     */
+    public function stringDelete($key) {
+        return $this->_redis->del($key);
+    }
+
+    /**
      * Parse the given redis url
      * @param string $url   the url
      * @return array        an array of config values
