@@ -28,6 +28,9 @@ class RedisStorage
     const VARIANT_ID = 'id';
     const VARIANT_FULL = 'full';
 
+    const ALLOWED_CHARS = 'A-Za-z$0-9#§%&\?\*\.\+';
+    const REGEX_URL = '/^(?<protocol>redis):\/\/(?:(?<user>[%s]+)(?::(?<passwd>[%s]+))?@)?(?<host>[A-Za-z.-]+)?(?::(?<port>[0-9]+))?(?:\/(?<db>[0-9]+))?$/';
+
     /** @var \Predis\Client  */
     protected $_redis;
 
@@ -124,12 +127,26 @@ class RedisStorage
      */
     protected static function parseRedisUrl($url)
     {
+        // redis://user:password@host:port/1
         $user = self::USER_DEFAULT;
         $password = self::PASSWORD_DEFAULT;
         $host = self::HOST_DEFAULT;
         $port = self::PORT_DEFAULT;
         $db = self::DB_DEFAULT;
 
+        $regex = sprintf(self::REGEX_URL, self::ALLOWED_CHARS, self::ALLOWED_CHARS);
+
+        $matches = [];
+
+        $result = preg_match($regex, $url, $matches);
+
+        if (array_key_exists('user', $matches)) $user = $matches['user'];
+        if (array_key_exists('password', $matches)) $user = $matches['password'];
+        if (array_key_exists('host', $matches)) $user = $matches['host'];
+        if (array_key_exists('port', $matches)) $user = $matches['port'];
+        if (array_key_exists('db', $matches)) $user = $matches['db'];
+
+        /*
         list($protocol, $rest) = explode('://', $url);
         if ($protocol != self::PROTOCOL_REDIS) throw new RedisBundleException(sprintf('Protocol %s is not supported!', $protocol));
         if ($rest != '') {
@@ -149,7 +166,7 @@ class RedisStorage
                 }
             }
         }
-
+        */
         return [$user, $password, $host, (int) $port, (int) $db];
     }
 } 
