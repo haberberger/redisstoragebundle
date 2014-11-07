@@ -11,6 +11,11 @@ namespace Haberberger\Storage\Dump;
 
 use Haberberger\RedisStorageBundle\Storage\AbstractStorage;
 
+/**
+ * A simple value dump
+ * Class SimpleDump
+ * @package Haberberger\Storage\Dump
+ */
 class SimpleDump extends AbstractStorage
 {
     const PATTERN_KEY = 'DUMP_%s_%s';
