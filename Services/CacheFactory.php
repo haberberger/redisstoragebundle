@@ -11,36 +11,12 @@ namespace Haberberger\RedisStorageBundle\Services;
 
 use Haberberger\RedisStorageBundle\Storage\Cache\SimpleCache;
 use Haberberger\RedisStorageBundle\Storage\Cache\AbstractCache;
+use Haberberger\Services\AbstractStorageFactory;
 
-class CacheFactory
+class CacheFactory extends AbstractStorageFactory
 {
-    protected $redis;
-
-    protected $instances;
-
-    function __construct($redis)
-    {
-        $this->redis = $redis;
-        $this->instances = [];
-    }
-
-    /**
-     * Get a simple cache instance with identifier
-     * @param string $identifier the identifier (an arbitrary string)
-     * @return AbstractCache
-     */
-    public function getInstance($identifier)
-    {
-        if (!array_key_exists($identifier, $this->instances)) {
-            $this->instances[$identifier] = $this->createInstance($identifier);
-        }
-
-        return $this->instances[$identifier];
-    }
-
     protected function createInstance($identifier)
     {
         return new SimpleCache($identifier, $this->redis);
     }
-
 }
