@@ -11,7 +11,7 @@ namespace Haberberger\RedisStorageBundle\Services;
 
 use Haberberger\RedisStorageBundle\Storage\Cache\SimpleCache;
 use Haberberger\RedisStorageBundle\Storage\Cache\AbstractCache;
-use Haberberger\RedisStorageBundle\Services\AbstractStorageFactory;
+use Haberberger\Services\AbstractStorageFactory;
 
 class CacheFactory extends AbstractStorageFactory
 {
