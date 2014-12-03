@@ -6,7 +6,7 @@
  * Time: 08:50
  */
 
-namespace Haberberger\Services;
+namespace Haberberger\RedisStorageBundle\Services;
 
 use Haberberger\RedisStorageBundle\Storage\AbstractStorage;
 
