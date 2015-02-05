@@ -22,14 +22,15 @@ class SimpleDump extends AbstractStorage
 
     /**
      * Dump a value in key
-     * @param $key
      * @param $value
      * @return string
      */
-    public function dump($key, $value)
+    public function dump($value)
     {
+        $key = hash('sha512', $value);
         $redisKey = $this->translateKey($key);
-        return $this->redis->stringWrite($redisKey, $value);
+        $result = $this->redis->stringWrite($redisKey, $value);
+        return $key;
     }
 
     /**
