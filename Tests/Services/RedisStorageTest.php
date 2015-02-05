@@ -13,12 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RedisStorageTest extends WebTestCase
 {
-
-    public function testTest()
-    {
-        $this->assertEquals(1+1, 2);
-    }
-
     public function testParseRedisUrl()
     {
         //$redisStorage = new RedisStorage('redis://');
@@ -32,8 +26,5 @@ class RedisStorageTest extends WebTestCase
             $actual = RedisStorage::parseRedisUrl($url);
             $this->assertEquals($expected, $actual);
         }
-
-
-
     }
 }
