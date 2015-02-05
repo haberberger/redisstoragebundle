@@ -138,7 +138,7 @@ class RedisStorage
 
         $matches = [];
 
-        $result = preg_match($regex, $url, $matches);
+        preg_match($regex, $url, $matches);
 
         if (array_key_exists('user', $matches)) $user = $matches['user'];
         if (array_key_exists('passwd', $matches)) $password = $matches['passwd'];
