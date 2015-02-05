@@ -1,6 +1,7 @@
 parameters:
     haberberger_redis_storage.redisstorage.class: Haberberger\RedisStorageBundle\Services\RedisStorage
     haberberger_redis_storage.cachefactory.class: Haberberger\RedisStorageBundle\Services\CacheFactory
+    haberberger_redis_storage.dumpfactory.class: Haberberger\RedisStorageBundle\Services\DumpFactory
 
 services:
     haberberger_redis_storage.redisstorage:
@@ -11,4 +12,7 @@ services:
 
     haberberger_redis_storage.cachefactory:
       class: %haberberger_redis_storage.cachefactory.class%
+      arguments: [@redis]
+    haberberger_redis_storage.dumpfactory:
+      class: %haberberger_redis_storage.dumpfactory.class%
       arguments: [@redis]
